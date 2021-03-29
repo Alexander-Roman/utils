@@ -1,7 +1,5 @@
 plugins {
-    // Apply the java-library plugin for API and implementation separation.
     id 'java-library'
-    // Applying the Maven Publish Plugin
     id 'maven-publish'
 }
 
@@ -11,24 +9,19 @@ sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
 repositories {
-    // Use JCenter for resolving dependencies.
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
-    // Use JUnit Jupiter API for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.1'
 
-    // Use JUnit Jupiter Engine for testing.
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
 
-    // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'org.apache.commons:commons-lang3:3.10'
 }
 
 tasks.named('test') {
-    // Use junit platform for unit tests.
     useJUnitPlatform()
 }
 
@@ -36,6 +29,9 @@ tasks.named('jar') {
     manifest {
         attributes('Implementation-Title': project.name,
                 'Implementation-Version': project.version)
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
 

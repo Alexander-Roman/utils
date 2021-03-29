@@ -11,6 +11,6 @@ public class StringUtils {
             return false;
         }
         BigDecimal bigDecimal = NumberUtils.createBigDecimal(str);
-        return bigDecimal.compareTo(BigDecimal.ZERO) > NumberUtils.INTEGER_ZERO;
+        return bigDecimal.compareTo(BigDecimal.ZERO) > 0;
     }
 }
